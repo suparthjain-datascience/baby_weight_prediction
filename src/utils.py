@@ -11,9 +11,10 @@ from sklearn.model_selection import GridSearchCV
 
 def cleaning_data_process(data):
     try:
-        cleaned_data = data.drop('ID', axis=1)
+        cols_to_remove = ['ID','LOUTCOME','FEDUC','MEDUC']
+        cleaned_data = data.drop(cols_to_remove, axis=1)
 
-        numerical_cols = ['GAINED', 'VISITS', 'MAGE', 'FEDUC', 'MEDUC', 'TOTALP', 'BDEAD', 'TERMS', 'WEEKS', 'CIGNUM',
+        numerical_cols = ['GAINED', 'VISITS', 'MAGE','FAGE', 'TOTALP', 'BDEAD', 'TERMS', 'WEEKS', 'CIGNUM',
                           'DRINKNUM']
 
         all_columns = cleaned_data.columns
@@ -42,7 +43,7 @@ def cleaning_data_process(data):
 
 def get_numerical_and_categorical_columns(data):
     try:
-        numerical_cols = ['GAINED', 'VISITS', 'MAGE', 'FEDUC', 'MEDUC', 'TOTALP', 'BDEAD', 'TERMS', 'WEEKS', 'CIGNUM',
+        numerical_cols = ['GAINED', 'VISITS', 'MAGE', 'TOTALP', 'BDEAD', 'TERMS', 'WEEKS', 'CIGNUM',
                           'DRINKNUM', 'BWEIGHT']
         all_columns = data.columns
         categorical_cols = [col for col in all_columns if col not in numerical_cols]
