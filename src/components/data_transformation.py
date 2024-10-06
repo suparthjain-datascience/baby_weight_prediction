@@ -28,9 +28,9 @@ class DataTransformation:
         Creates the preprocessing pipeline with numerical and categorical transformations.
         """
         try:
-            numerical_columns = ['GAINED', 'VISITS', 'MAGE', 'FEDUC', 'MEDUC', 'TOTALP', 'BDEAD', 'TERMS', 'WEEKS',
+            numerical_columns = ['GAINED', 'VISITS','FAGE', 'MAGE', 'TOTALP', 'BDEAD', 'TERMS', 'WEEKS',
                                  'CIGNUM', 'DRINKNUM']
-            categorical_columns = ['SEX', 'MARITAL', 'FAGE', 'LOUTCOME', 'RACEMOM', 'RACEDAD', 'HISPMOM', 'HISPDAD',
+            categorical_columns = ['SEX', 'MARITAL' , 'RACEMOM', 'RACEDAD', 'HISPMOM', 'HISPDAD',
                                    'ANEMIA', 'CARDIAC', 'ACLUNG', 'DIABETES', 'HERPES', 'HYDRAM', 'HEMOGLOB', 'HYPERCH',
                                    'HYPERPR', 'ECLAMP', 'CERVIX', 'PINFANT', 'PRETERM', 'RENAL', 'RHSEN', 'UTERINE']
 
@@ -98,8 +98,8 @@ class DataTransformation:
             logging.info(f"Shape of transformed input feature array: {input_feature_train_arr.shape}")
 
             # Convert sparse matrices to dense arrays
-            input_feature_train_arr = input_feature_train_arr.toarray()
-            input_feature_test_arr = input_feature_test_arr.toarray()
+            # input_feature_train_arr = input_feature_train_arr
+            # input_feature_test_arr = input_feature_test_arr.toarray()
 
             target_train_arr = np.array(target_feature_train_df).reshape(-1, 1)
             target_test_arr = np.array(target_feature_test_df).reshape(-1, 1)
