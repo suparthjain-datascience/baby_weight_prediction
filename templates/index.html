@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <title>Newborn Babies Homepage - Fade Slider</title>
+        <style>
+            * {
+                margin: 0px;
+                padding: 0px;
+                box-sizing: border-box;
+            }
+
+            body, html {
+                height: 100%;
+                font-family: Arial, sans-serif;
+                background-color: black;
+            }
+
+            .slider {
+                position: relative;
+                height: 100vh;
+                overflow: hidden;
+            }
+
+            .slides {
+                position: relative;
+                height: 100%;
+            }
+
+            .slide {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background-size: cover;
+                background-position: center;
+                opacity: 0;
+                transition: opacity 1s ease-in-out;
+            }
+
+            .slide.active {
+                opacity: 1;
+            }
+
+            .content {
+                position: absolute;
+                top: 8%;
+                left: 0;
+                width: 100%;
+                transform: translateY(-50%);
+                color: white;
+                text-align: center;
+                z-index: 2;
+                background-color: rgba(0, 0, 0, 0.5);
+                border-radius: 5px;
+            }
+
+            .arrow {
+                position: absolute;
+                top: 62%;
+                transform: translateY(-50%);
+                font-size: 2rem;
+                color: black;
+                background: rgba(0, 0, 0, 0.5);
+                padding: 5px;
+                cursor: pointer;
+                border-radius: 50%;
+            }
+
+            .arrow-left {
+                left: 10px;
+            }
+
+            .arrow-right {
+                right: 10px;
+            }
+
+            h1 {
+                font-size: 3rem;
+                margin: 20px;
+            }
+
+            p {
+                font-size: 1.5rem;
+            }
+
+            @media (max-width: 768px) {
+                h1 {
+                    font-size: 2rem;
+                }
+
+                p {
+                    font-size: 1rem;
+                }
+            }
+
+            .predict-button {
+                width: 100%;
+                height: 40px;
+                border-radius: 5px;
+                border: none;
+                color: white;
+                font-size: 28px;
+                font-weight: bolder;
+                background: black;
+                cursor: pointer;
+            }
+
+            .predict-button:hover {
+                background-color: aliceblue;
+                color: black;
+            }
+
+
+        </style>
+    </head>
+    <body>
+
+        <div class="slider">
+            <div class="slides">
+                <div class="slide active" id="slide1">
+                </div>
+                <div class="slide" id="slide2">
+                </div>
+                <div class="slide" id="slide3">
+                </div>
+            </div>
+
+            <!-- Navigation Arrows -->
+            <span class="arrow arrow-left">&#10094;</span>
+            <span class="arrow arrow-right">&#10095;</span>
+
+            <div class="content">
+                <h1>Welcome to the Newborn World!</h1>
+                <p style="padding-bottom: 10px;">Discover the joy and beauty of newborn babies.</p>
+                <button class="predict-button" id="redirectButton">PREDICT NEW BORN BABY WEIGHT</button>
+            </div>
+        </div>
+
+
+        <script>
+            let currentIndex = 0;
+            const slides = document.querySelectorAll('.slide');
+            const totalSlides = slides.length;
+            const intervalTime = 5000; // 5 seconds
+
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.classList.remove('active');
+                    if (i === index) {
+                        slide.classList.add('active');
+                    }
+                });
+                currentIndex = index % totalSlides;
+            }
+
+            let slideInterval = setInterval(() => {
+                showSlide((currentIndex + 1) % totalSlides);
+            }, intervalTime);
+
+            document.querySelector('.arrow-right').addEventListener('click', () => {
+                clearInterval(slideInterval);
+                showSlide((currentIndex + 1) % totalSlides);
+                slideInterval = setInterval(() => {
+                    showSlide((currentIndex + 1) % totalSlides);
+                }, intervalTime);
+            });
+
+            document.querySelector('.arrow-left').addEventListener('click', () => {
+                clearInterval(slideInterval);
+                showSlide((currentIndex - 1 + totalSlides) % totalSlides);
+                slideInterval = setInterval(() => {
+                    showSlide((currentIndex + 1) % totalSlides);
+                }, intervalTime);
+            });
+
+            document.getElementById('redirectButton').addEventListener('click', () => {
+                window.location.href = 'predict_weight';
+            });
+
+            document.getElementById('slide1').style.backgroundImage = "url('/static/images/image_1.jpg')";
+            document.getElementById('slide2').style.backgroundImage = "url('/static/images/image_2.jpg')";
+            document.getElementById('slide3').style.backgroundImage = "url('/static/images/image_3.jpg')";
+        </script>
+
+    </body>
+</html>

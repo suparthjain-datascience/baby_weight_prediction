@@ -6,14 +6,15 @@ from src.exception import CustomException
 from src.logger import logging
 from src.utils import load_object
 
+
 class PredictPipeline:
     def __init__(self):
         pass
 
     def predict(self, features):
         try:
-            model_path = os.path.join('artifacts','model.pkl')
-            preprocessor_path = os.path.join('artifacts','preprocessor.pkl')
+            model_path = os.path.join('artifacts', 'model.pkl')
+            preprocessor_path = os.path.join('artifacts', 'preprocessor.pkl')
 
             logging.info('Before Loading')
 
@@ -28,15 +29,10 @@ class PredictPipeline:
 
             return predictions
         except Exception as e:
-            raise CustomException(e,sys)
+            raise CustomException(e, sys)
+
 
 class CustomData:
-    numerical_columns = ['GAINED', 'VISITS', 'MAGE', 'FEDUC', 'MEDUC', 'TOTALP', 'BDEAD', 'TERMS', 'WEEKS', 'CIGNUM',
-                         'DRINKNUM', 'BWEIGHT']
-    categorical_columns = ['SEX', 'MARITAL', 'FAGE', 'LOUTCOME', 'RACEMOM', 'RACEDAD', 'HISPMOM', 'HISPDAD', 'ANEMIA',
-                           'CARDIAC', 'ACLUNG', 'DIABETES', 'HERPES', 'HYDRAM', 'HEMOGLOB', 'HYPERCH', 'HYPERPR',
-                           'ECLAMP', 'CERVIX', 'PINFANT', 'PRETERM', 'RENAL', 'RHSEN', 'UTERINE']
-
     def __init__(
             self,
             GAINED: float,
@@ -74,20 +70,20 @@ class CustomData:
     ):
         self.gained = GAINED
         self.visits = VISITS
-        self.m_age = MAGE
-        self.f_age = FAGE
-        self.total_p = TOTALP
-        self.b_dead = BDEAD
+        self.mage = MAGE
+        self.fage = FAGE
+        self.totalp = TOTALP
+        self.bdead = BDEAD
         self.terms = TERMS
         self.weeks = WEEKS
-        self.cig_num = CIGNUM
-        self.drink_num = DRINKNUM
+        self.cignum = CIGNUM
+        self.drinknum = DRINKNUM
         self.sex = SEX,
         self.marital = MARITAL,
-        self.race_mom = RACEMOM,
-        self.race_dad = RACEDAD,
-        self.hisp_mom = HISPMOM,
-        self.hisp_dad = HISPDAD,
+        self.racemom = RACEMOM,
+        self.racedad = RACEDAD,
+        self.hispmom = HISPMOM,
+        self.hispdad = HISPDAD,
         self.anemia = ANEMIA,
         self.cardiac = CARDIAC,
         self.aclung = ACLUNG,
@@ -108,38 +104,38 @@ class CustomData:
     def get_data_as_data_frame(self):
         try:
             custom_data_input_dict = {
-                "gained": [self.gained],
-                "visits": [self.visits],
-                "m_age": [self.m_age],
-                "f_age": [self.f_age],
-                "total_p": [self.total_p],
-                "b_dead": [self.b_dead],
-                "terms": [self.terms],
-                "weeks": [self.weeks],
-                "cig_num": [self.cig_num],
-                "drink_num": [self.drink_num],
-                "sex": [self.sex],
-                "marital": [self.marital],
-                "race_mom": [self.race_mom],
-                "race_dad": [self.race_dad],
-                "hisp_mom": [self.hisp_mom],
-                "hisp_dad": [self.hisp_dad],
-                "anemia": [self.anemia],
-                "cardiac": [self.cardiac],
-                "aclung": [self.aclung],
-                "diabetes": [self.diabetes],
-                "herpes": [self.herpes],
-                "hydram": [self.hydram],
-                "hyperch": [self.hyperch],
-                "hyperpr": [self.hyperpr],
-                "haemoglob": [self.haemoglob],
-                "eclamp": [self.eclamp],
-                "cervix": [self.cervix],
-                "pinfant": [self.pinfant],
-                "preterm": [self.preterm],
-                "renal": [self.renal],
-                "rhsen": [self.rhsen],
-                "uterine": [self.uterine]
+                "GAINED": [self.gained],
+                "VISITS": [self.visits],
+                "MAGE": [self.mage],
+                "FAGE": [self.fage],
+                "TOTALP": [self.totalp],
+                "BDEAD": [self.bdead],
+                "TERMS": [self.terms],
+                "WEEKS": [self.weeks],
+                "CIGNUM": [self.cignum],
+                "DRINKNUM": [self.drinknum],
+                "SEX": [self.sex],
+                "MARITAL": [self.marital],
+                "RACEMOM": [self.racemom],
+                "RACEDAD": [self.racedad],
+                "HISPMOM": [self.hispmom],
+                "HISPDAD": [self.hispdad],
+                "ANEMIA": [self.anemia],
+                "CARDIAC": [self.cardiac],
+                "ACLUNG": [self.aclung],
+                "DIABETES": [self.diabetes],
+                "HERPES": [self.herpes],
+                "HYDRAM": [self.hydram],
+                "HEMOGLOB": [self.haemoglob],
+                "HYPERCH": [self.hyperch],
+                "HYPERPR": [self.hyperpr],
+                "ECLAMP": [self.eclamp],
+                "CERVIX": [self.cervix],
+                "PINFANT": [self.pinfant],
+                "PRETERM": [self.preterm],
+                "RENAL": [self.renal],
+                "RHSEN": [self.rhsen],
+                "UTERINE": [self.uterine]
             }
 
             return pd.DataFrame(custom_data_input_dict)

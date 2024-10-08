@@ -14,6 +14,7 @@ import os
 
 from src.utils import save_object
 
+
 @dataclass
 class DataTransformationConfig:
     preprocessor_obj_file_path = os.path.join('artifacts', "preprocessor.pkl")
@@ -28,9 +29,9 @@ class DataTransformation:
         Creates the preprocessing pipeline with numerical and categorical transformations.
         """
         try:
-            numerical_columns = ['GAINED', 'VISITS','FAGE', 'MAGE', 'TOTALP', 'BDEAD', 'TERMS', 'WEEKS',
+            numerical_columns = ['GAINED', 'VISITS', 'FAGE', 'MAGE', 'TOTALP', 'BDEAD', 'TERMS', 'WEEKS',
                                  'CIGNUM', 'DRINKNUM']
-            categorical_columns = ['SEX', 'MARITAL' , 'RACEMOM', 'RACEDAD', 'HISPMOM', 'HISPDAD',
+            categorical_columns = ['SEX', 'MARITAL', 'RACEMOM', 'RACEDAD', 'HISPMOM', 'HISPDAD',
                                    'ANEMIA', 'CARDIAC', 'ACLUNG', 'DIABETES', 'HERPES', 'HYDRAM', 'HEMOGLOB', 'HYPERCH',
                                    'HYPERPR', 'ECLAMP', 'CERVIX', 'PINFANT', 'PRETERM', 'RENAL', 'RHSEN', 'UTERINE']
 

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <title>Baby Health Data Form</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                padding: 20px;
+            }
+
+            form {
+                background: black;
+                color: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            label {
+                display: block;
+                margin: 10px 0 5px;
+            }
+
+            input[type="text"],
+            input[type="number"],
+            select {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 15px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+            .form-row {
+                display: flex;
+                justify-content: space-between;
+                gap: 10px;
+                /* Space between the inputs */
+            }
+
+            .form-row div {
+                flex: 1;
+                /* Flex property to ensure equal width */
+            }
+
+            button {
+                background-color: dodgerblue;
+                color: white;
+                font-size: 16px;
+                font-weight: bold;
+                padding: 10px 15px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            button:hover {
+                background-color: blueviolet;
+            }
+
+            .button-container {
+                display: flex;
+                justify-content: center;
+                margin-top: 20px;
+            }
+
+            .input-field {
+                padding: 5px;
+                margin: 8px;
+            }
+
+            h2 {
+                text-align: center;
+                font-weight: bolder;
+                padding: 10px;
+                margin: 15px;
+            }
+
+            .baby-weight {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <h2>Baby Weight Prediction Form</h2>
+        <hr />
+        <div>
+            <form id="babyHealthForm" action="{{ url_for('predict_datapoint') }}" method="post">
+                <div class="form-row">
+                    <div class="input-field">
+                        <label class="form-label">Weight gained during pregnancy</label>
+                        <input class="form-control" type="number" name="gained" placeholder="Enter weight" min="0" max="100"
+                            required />
+                    </div>
+                    <div class="input-field">
+                        <label class="form-label">Number of prenatal visits</label>
+                        <input class="form-control" type="number" name="visits" placeholder="Enter number of visits" min="0"
+                            max="100" required />
+                    </div>
+                    <div class="input-field">
+                        <label class="form-label">Age of Mother</label>
+                        <input class="form-control" type="number" name="mage" placeholder="Enter age of mother" min="0"
+                            max="100" required />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-field">
+                        <label class="form-label">Age of Father</label>
+                        <input class="form-control" type="number" name="fage" placeholder="Enter age of father" min="0"
+                            max="100" required />
+                    </div>
+                    <div class="input-field">
+                        <label class="form-label">Total number of pregnancies</label>
+                        <input class="form-control" type="number" name="totalp"
+                            placeholder="Enter total number of pregnancies" min="0" max="100" required />
+                    </div>
+                    <div class="input-field">
+                        <label class="form-label">Number of children born alive now dead</label>
+                        <input class="form-control" type="number" name="bdead" min="0" max="100" required />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-field">
+                        <label class="form-label">Number of other terminations</label>
+                        <input class="form-control" type="number" name="terms" min="0" max="100" required />
+                    </div>
+                    <div class="input-field">
+                        <label class="form-label">Completed weeks of gestation</label>
+                        <input class="form-control" type="number" name="weeks" min="0" max="100" required />
+                    </div>
+                    <div class="input-field">
+                        <label class="form-label">Average number of cigarettes used daily by mother</label>
+                        <input class="form-control" type="number" name="cignum" min="0" max="100" required />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-field">
+                        <label class="form-label">Average number of drinks used daily by mother</label>
+                        <input class="form-control" type="number" name="drinknum" min="0" max="100" required />
+                    </div>
+
+                    <div class="input-field">
+                        <label class="form-label">Sex</label>
+                        <select class="form-control" name="sex" required>
+                            <option class="placeholder" selected disabled value="">Select gender</option>
+                            <option value=1>Male</option>
+                            <option value=2>Female</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label class="form-label">Marital Status</label>
+                        <select class="form-control" name="marital" required>
+                            <option class="placeholder" selected disabled value="">Select marital status</option>
+                            <option value=1>Married</option>
+                            <option value=2>Unmarried</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-field">
+                        <label class="form-label">Race (Mother)</label>
+                        <select class="form-control" name="racemom" required>
+                            <option class="placeholder" selected disabled value="">Select race</option>
+                            <option value=0>Unknown</option>
+                            <option value=1>OTHER_NON_WHITE</option>
+                            <option value=2>WHITE</option>
+                            <option value=3>BLACK</option>
+                            <option value=4>AMERICAN_INDIAN</option>
+                            <option value=5>CHINESE</option>
+                            <option value=6>JAPANESE</option>
+                            <option value=7>HAWAIIAN</option>
+                            <option value=8>FILIPINO</option>
+                            <option value=9>OTHER_ASIAN</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label class="form-label">Race (Father)</label>
+                        <select class="form-control" name="racedad" required>
+                            <option class="placeholder" selected disabled value="">Select race</option>
+                            <option value=0>Unknown</option>
+                            <option value=1>OTHER_NON_WHITE</option>
+                            <option value=2>WHITE</option>
+                            <option value=3>BLACK</option>
+                            <option value=4>AMERICAN_INDIAN</option>
+                            <option value=5>CHINESE</option>
+                            <option value=6>JAPANESE</option>
+                            <option value=7>HAWAIIAN</option>
+                            <option value=8>FILIPINO</option>
+                            <option value=9>OTHER_ASIAN</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label class="form-label">Hispanic (Mother)</label>
+                        <select class="form-control" name="hispmom" required>
+                            <option class="placeholder" selected disabled value="">Select hispanic</option>
+                            <option value=0>Cubans</option>
+                            <option value=1>Mexicans</option>
+                            <option value=2>No</option>
+                            <option value=3>Colombians</option>
+                            <option value=4>Peruvians</option>
+                            <option value=5>Salvadorans</option>
+                            <option value=6>Guatemalans</option>
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-field">
+                        <label class="form-label">Hispanic (Father)</label>
+                        <select class="form-control" name="hispdad" required>
+                            <option class="placeholder" selected disabled value="">Select hispanic</option>
+                            <option value=0>Cubans</option>
+                            <option value=1>Mexicans</option>
+                            <option value=2>No</option>
+                            <option value=3>Colombians</option>
+                            <option value=4>Peruvians</option>
+                            <option value=5>Salvadorans</option>
+                            <option value=6>Guatemalans</option>
+
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label class="form-label">Has/Had Anemia (Mother)</label>
+                        <select class="form-control" name="anemia" required>
+                            <option class="placeholder" selected disabled value="">Select option</option>
+                            <option value=0>No</option>
+                            <option value=1>Yes</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label class="form-label">Has/Had Cardiac Disease (Mother)</label>
+                        <select class="form-control" name="cardiac" required>
+                            <option class="placeholder" selected disabled value="">Select option</option>
+                            <option value=0>No</option>
+                            <option value=1>Yes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-field">
+                        <label class="form-label">Has/Had acute or chronic lung disease (Mother)</label>
+                        <select class="form-control" name="aclung" required>
+                            <option class="placeholder" selected disabled value="">Select option</option>
+                            <option value=0>No</option>
+                            <option value=1>Yes</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label class="form-label">Has/Had diabetes (Mother)</label>
+                        <select class="form-control" name="diabetes" required>
+                            <option class="placeholder" selected disabled value="">Select option</option>
+                            <option value=0>No</option>
+                            <option value=1>Yes</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label class="form-label">Has/Had genital herpes (Mother)</label>
+                        <select class="form-control" name="herpes" required>
+                            <option class="placeholder" selected disabled value="">Select option</option>
+                            <option value=0>No</option>
+                            <option value=1>Yes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-field">
+                        <label class="form-label">Has/Had Hydramnios/Oligohydramnios (Mother)</label>
+                        <select class="form-control" name="hydram" required>
+                            <option class="placeholder" selected disabled value="">Select option</option>
+                            <option value=0>No</option>
+                            <option value=1>Yes</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label class="form-label">Has/Had hemoglobinopathy (Mother)</label>
+                        <select class="form-control" name="hemoglob" required>
+                            <option class="placeholder" selected disabled value="">Select option</option>
+                            <option value=0>No</option>
+                            <option value=1>Yes</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label class="form-label">Has/Had chronic hypertension (Mother)</label>
+                        <select class="form-control" name="hyperch" required>
+                            <option class="placeholder" selected disabled value="">Select option</option>
+                            <option value=0>No</option>
+                            <option value=1>Yes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-field">
+                        <label class="form-label">Has/Had pregnancy hypertension (Mother)</label>
+                        <select class="form-control" name="hyperpr" required>
+                            <option class="placeholder" selected disabled value="">Select option</option>
+                            <option value=0>No</option>
+                            <option value=1>Yes</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label class="form-label">Has/Had Eclampsia (Mother)</label>
+                        <select class="form-control" name="eclamp" required>
+                            <option class="placeholder" selected disabled value="">Select option</option>
+                            <option value=0>No</option>
+                            <option value=1>Yes</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label class="form-label">Has/Had incompetent cervix (Mother)</label>
+                        <select class="form-control" name="cervix" required>
+                            <option class="placeholder" selected disabled value="">Select option</option>
+                            <option value=0>No</option>
+                            <option value=1>Yes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-field">
+                        <label class="form-label">Has/Had previous infant 4000+ grams (Mother)</label>
+                        <select class="form-control" name="pinfant" required>
+                            <option class="placeholder" selected disabled value="">Select option</option>
+                            <option value=0>No</option>
+                            <option value=1>Yes</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label class="form-label">Has/Had previous preterm/small infant (Mother)</label>
+                        <select class="form-control" name="preterm" required>
+                            <option class="placeholder" selected disabled value="">Select option</option>
+                            <option value=0>No</option>
+                            <option value=1>Yes</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label class="form-label">Has/Had renal disease (Mother)</label>
+                        <select class="form-control" name="renal" required>
+                            <option class="placeholder" selected disabled value="">Select option</option>
+                            <option value=0>No</option>
+                            <option value=1>Yes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-field">
+                        <label class="form-label">Has/Had Rh sensitization (Mother)</label>
+                        <select class="form-control" name="rhsen" required>
+                            <option class="placeholder" selected disabled value="">Select option</option>
+                            <option value=0>No</option>
+                            <option value=1>Yes</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label class="form-label">Has/Had uterine bleeding (Mother)</label>
+                        <select class="form-control" name="uterine" required>
+                            <option class="placeholder" selected disabled value="">Select option</option>
+                            <option value=0>No</option>
+                            <option value=1>Yes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="button-container">
+                    <input class="btn btn-primary" type="submit" id="showModalBtn" value="PREDICT BABY WEIGHT" />
+                </div>
+            </form>
+        </div>
+
+        <div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="resultModalLabel">Prediction Result</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        The predicted Baby Weight is {{ results }} kg.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                var result = "{{ results }}";
+                const babyWeight = document.querySelector('.baby-weight');
+                if (result) {
+                    $('#resultModal').modal('show');
+                    babyWeight.style.display = 'block';
+                }
+            });
+        </script>
+
+    </body>
+
+</html>

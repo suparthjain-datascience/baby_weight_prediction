@@ -9,12 +9,28 @@ import yaml
 from sklearn.model_selection import GridSearchCV
 
 
+def load_object(file_path):
+    """
+    Loads the object from the specified file path using dill.
+    """
+    try:
+        if os.path.exists(file_path):
+            with open(file_path, 'rb') as file_obj:
+                logging.info(f'Loading object from {file_path}')
+                return pickle.load(file_obj)
+        else:
+            logging.info(f'No object found at {file_path}')
+            return None
+    except Exception as e:
+        raise CustomException(e, sys)
+
+
 def cleaning_data_process(data):
     try:
-        cols_to_remove = ['ID','LOUTCOME','FEDUC','MEDUC']
+        cols_to_remove = ['ID', 'LOUTCOME', 'FEDUC', 'MEDUC']
         cleaned_data = data.drop(cols_to_remove, axis=1)
 
-        numerical_cols = ['GAINED', 'VISITS', 'MAGE','FAGE', 'TOTALP', 'BDEAD', 'TERMS', 'WEEKS', 'CIGNUM',
+        numerical_cols = ['GAINED', 'VISITS', 'MAGE', 'FAGE', 'TOTALP', 'BDEAD', 'TERMS', 'WEEKS', 'CIGNUM',
                           'DRINKNUM']
 
         all_columns = cleaned_data.columns
@@ -39,7 +55,8 @@ def cleaning_data_process(data):
 
         return cleaned_data
     except Exception as e:
-        raise CustomException(e,sys)
+        raise CustomException(e, sys)
+
 
 def get_numerical_and_categorical_columns(data):
     try:
@@ -53,7 +70,8 @@ def get_numerical_and_categorical_columns(data):
             categorical_cols
         )
     except Exception as e:
-        raise CustomException(e,sys)
+        raise CustomException(e, sys)
+
 
 def save_object(file_path, obj):
     """
@@ -68,6 +86,7 @@ def save_object(file_path, obj):
         logging.info(f'Object saved to {file_path}')
     except Exception as e:
         raise CustomException(e, sys)
+
 
 def evaluate_model(X_train, y_train, X_test, y_test, models):
     """
@@ -187,5 +206,3 @@ def hyperparameter_tuning(model, param_grid, X_train, y_train):
         return search.best_estimator_
     except Exception as e:
         raise CustomException(e, sys)
-
-

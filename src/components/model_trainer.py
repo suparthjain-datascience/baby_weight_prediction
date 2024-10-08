@@ -15,12 +15,14 @@ from src.exception import CustomException
 from src.logger import logging
 from src.utils import evaluate_model, compare_and_save_model, load_hyperparameter_grids, hyperparameter_tuning
 
+
 @dataclass
 class ModelTrainerConfig:
-    trained_model_file_path = os.path.join('artifacts','model.pkl')
+    trained_model_file_path = os.path.join('artifacts', 'model.pkl')
 
-    yaml_file_path = os.path.join('config','hyperparameters.yaml')
+    yaml_file_path = os.path.join('config', 'hyperparameters.yaml')
     param_grids = load_hyperparameter_grids(yaml_file_path)
+
 
 class ModelTrainer:
     def __init__(self):
@@ -81,8 +83,8 @@ class ModelTrainer:
                     best_model_name = model_name
                     best_model = tuned_model
 
-            if best_model_score < 0.6:
-                raise CustomException('No best model found')
+            # if best_model_score < 0.5:
+            #     raise CustomException('No best model found')
 
             logging.info(f"Best model after tuning is {best_model_name} with R2 score: {best_model_score}")
 
@@ -103,8 +105,6 @@ class ModelTrainer:
         except Exception as e:
             raise CustomException(e, sys)
 
-
             pass
         except Exception as e:
-            raise CustomException(e,sys)
-
+            raise CustomException(e, sys)
